@@ -29,6 +29,14 @@ dependencies {
 run {
     standardInput = System.in
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'MainKt'
+    }
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
         jvmTarget = "1.8"
