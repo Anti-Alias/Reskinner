@@ -1,0 +1,7 @@
+{
+    "url" : "jdbc:postgresql://db/repainter",
+    "driver_class" : "org.postgresql.Driver",
+    "max_pool_size" : 32,
+    "user" : "repainter",
+    "password" : "s33cret"
+}

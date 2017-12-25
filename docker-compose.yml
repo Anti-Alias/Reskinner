@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+    db:
+        container_name: db
+        image: postgres
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_USER: repainter
+            POSTGRES_PASSWORD: repainter
+            POSTGRES_DB: repainter
+    adminer:
+        container_name: adminer
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080
