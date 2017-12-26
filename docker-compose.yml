@@ -8,9 +8,9 @@ services:
         ports:
             - 5432:5432
         environment:
-            POSTGRES_USER: repainter
-            POSTGRES_PASSWORD: repainter
-            POSTGRES_DB: repainter
+            POSTGRES_USER: reskinner
+            POSTGRES_PASSWORD: reskinner
+            POSTGRES_DB: reskinner
 
     adminer:
         container_name: adminer
@@ -21,9 +21,9 @@ services:
         depends_on:
             - db
 
-    repainter:
-        container_name: repainter
-        image: repainter
+    reskinner:
+        container_name: reskinner
+        image: reskinner
         build: .
         restart: always
         ports:

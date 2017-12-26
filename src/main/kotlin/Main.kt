@@ -15,8 +15,13 @@ fun main(args: Array<String>) {
     // Creates root vertx
     val vertx = Vertx.vertx()
 
+    // Determines environment we're running in
+    val envConfigStr: String = File("configs/db.json").readText()
+    val envConfig = JsonObject(envConfigStr)
+    println(envConfig)
+
     // Creates connection to database
-    val dbConfigStr: String = File("configs/db.json").readText()
+    val dbConfigStr: String = File("configs/local-docker/db.json").readText()
     val dbConfig = JsonObject(dbConfigStr)
     val db = JDBCClient.createShared(vertx, dbConfig)
 

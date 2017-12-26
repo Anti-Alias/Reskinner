@@ -1,7 +1,7 @@
 {
-    "url" : "jdbc:postgresql://db/repainter",
+    "url" : "jdbc:postgresql://db/reskinner",
     "driver_class" : "org.postgresql.Driver",
     "max_pool_size" : 32,
-    "user" : "repainter",
+    "user" : "reskinner",
     "password" : "s33cret"
 }

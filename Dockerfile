@@ -1,10 +1,16 @@
+# Uses Ubuntu as base image
 FROM ubuntu
 
+# Runs these shell commands to install jdk on this image
 RUN apt-get update -y
 RUN apt-get install openjdk-8-jdk -y
 
-WORKDIR /repainter
-ADD build/libs/Reskinner.jar .
+# Creates working dir in image, and changes to that directory.
+WORKDIR /reskinner
+
+# Add application files to working directory. (Executable, configs, etc)
+ADD ./build/libs/Reskinner.jar /reskinner
 ADD configs configs
 
+# Sets the shell command to invoke when a container is started.
 CMD java -jar Reskinner.jar
