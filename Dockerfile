@@ -10,7 +10,12 @@ WORKDIR /reskinner
 
 # Add application files to working directory. (Executable, configs, etc)
 ADD ./build/libs/Reskinner.jar /reskinner
-ADD configs configs
+ADD configs-docker configs
+ADD sql sql
+ADD templates templates
+ADD images images
+ADD css css
+ADD js js
 
 # Sets the shell command to invoke when a container is started.
 CMD java -jar Reskinner.jar

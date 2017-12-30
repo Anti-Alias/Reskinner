@@ -11,6 +11,9 @@ services:
             POSTGRES_USER: reskinner
             POSTGRES_PASSWORD: reskinner
             POSTGRES_DB: reskinner
+        volumes:
+            - ./sql/init-schema.sql:/docker-entrypoint-initdb.d/0-init-schema.sql
+            - ./sql/init-data.sql:/docker-entrypoint-initdb.d/1-init-data.sql
 
     adminer:
         container_name: adminer

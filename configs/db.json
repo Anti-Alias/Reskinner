@@ -1,0 +1,8 @@
+{
+    "hostname" : "localhost",
+    "port" : 5432,
+    "database" : "reskinner",
+    "user" : "reskinner",
+    "password" : "reskinner",
+    "pool-size" : 32
+}

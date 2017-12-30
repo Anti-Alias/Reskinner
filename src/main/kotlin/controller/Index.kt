@@ -1,21 +1,21 @@
 package controller
+import com.github.pgasync.Db
 import io.vertx.ext.web.*
 import io.vertx.core.http.*
-import io.vertx.ext.sql.SQLClient
 
 
 /**
- * Object responsible for setting home resources
+ * Object responsible for setting index resources
  */
-class Home(val db: SQLClient) {
+class Index(val db: Db) {
 
 
     /**
      * Sets routes for home pages.
      */
     fun configure(router: Router) {
-        router.get("/").handler(::home)
-        router.get("/home").handler(::home)
+        router.get("/index").handler(::index)
+        router.get("/index.hbs").handler(::index)
     }
 
 
@@ -25,9 +25,11 @@ class Home(val db: SQLClient) {
     /**
      * Routes the home page
      */
-    fun home(ctx: RoutingContext) {
+    fun index(ctx: RoutingContext) {
+
         val req: HttpServerRequest = ctx.request()
         val resp: HttpServerResponse = ctx.response()
-        resp.end("Hello, world!")
+
+        ctx.next()
     }
 }

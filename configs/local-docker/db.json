@@ -1,7 +1,0 @@
-{
-    "url" : "jdbc:postgresql://db/reskinner",
-    "driver_class" : "org.postgresql.Driver",
-    "max_pool_size" : 32,
-    "user" : "reskinner",
-    "password" : "s33cret"
-}
