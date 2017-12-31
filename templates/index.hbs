@@ -1,11 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Home</title>
-    </head>
+{{!-- Injects title content --}}
+{{#partial "title"}}Home{{/partial}}
 
-    <body>
-        Welcome home!
-        This is a template!
-    </body>
-</html>
+
+{{!-- Injects home content into root page --}}
+{{#partial "content"}}
+    <h1>Header</h1>
+    <p>That was the header content</p>
+{{/partial}}
+
+
+{{!-- Inherits root page --}}
+{{> root}}

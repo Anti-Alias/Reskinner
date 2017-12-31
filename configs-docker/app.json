@@ -1,0 +1,4 @@
+{
+    "docker" : true,
+    "template-cache-size" : 10000
+}

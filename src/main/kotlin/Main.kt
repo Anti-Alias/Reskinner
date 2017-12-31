@@ -9,7 +9,7 @@ import io.vertx.ext.web.handler.StaticHandler
 import io.vertx.ext.web.handler.TemplateHandler
 import io.vertx.ext.web.templ.HandlebarsTemplateEngine
 import java.io.File
-import kotlin.concurrent.thread
+
 
 
 /**
@@ -18,35 +18,45 @@ import kotlin.concurrent.thread
 fun main(args: Array<String>) {
 
     // Gets configs
-    val envStr: String = File("configs/env.json").readText()
+    val appStr: String = File("configs/app.json").readText()
     val dbStr: String = File("configs/db.json").readText()
-    val envCfg = JsonObject(envStr)
+    val appCfg = JsonObject(appStr)
     val dbCfg = JsonObject(dbStr)
 
-
     // Determines if docker is being used
-    val docker: Boolean = envCfg.getBoolean("docker")
+    val docker: Boolean = appCfg.getBoolean("docker")
 
     // If not using docker, run app in background thread, and
     // allow it to die by pressing 'enter' in command line.
     if(!docker) {
 
-        thread { start(dbCfg) }
+        // Starts server in background thread
+        var running = true
+        val server = makeServer(appCfg, dbCfg).listen(8080)
+
+
+        // Reads from stdin to manage server.
         println("Please press 'enter' to close application. Pressing ^C will kill the gradle daemon making builds take longer.")
         readLine()
-        System.exit(0)
+
+        // Shuts down server
+        println("Shutting down...")
+        server.close {
+            System.exit(0)
+        }
     }
 
     // Otherwise, run it on current thread
-    else start(dbCfg)
+    else makeServer(appCfg, dbCfg).listen(8080)
 }
 
 /**
  * Starts the application
  */
-fun start(dbCfg: JsonObject) {
+fun makeServer(appCfg: JsonObject, dbCfg: JsonObject): HttpServer {
 
     // Creates a Db client
+    val templateCacheSize: Int = appCfg.getInteger("template-cache-size")
     val db: Db = fetchDb(dbCfg)
 
     // Creates operation to start application
@@ -54,6 +64,7 @@ fun start(dbCfg: JsonObject) {
 
     // Creates handebar engine and handler
     val engine = HandlebarsTemplateEngine.create()
+    engine.setMaxCacheSize(templateCacheSize)
     val templateHandler = TemplateHandler.create(engine)
 
     // Creates root vertx for HTTP server
@@ -65,21 +76,19 @@ fun start(dbCfg: JsonObject) {
     val cssHandler = StaticHandler.create("css")
     val jsHandler = StaticHandler.create("js")
     router.get("/images/*").handler(imageHandler)
-    router.get("/js/*").handler(imageHandler)
-    router.get("/css/*").handler(imageHandler)
+    router.get("/js/*").handler(jsHandler)
+    router.get("/css/*").handler(cssHandler)
 
     // Routes pages
-    Index(db).configure(router)
-
-
-    // Routes all other pages to template engine
-    router.get().handler(templateHandler)
+    Index(db, templateHandler).configure(router)
 
 
     // Creates HTTP server, assigns routes, and listens on port
     val server: HttpServer = vertx.createHttpServer()
     server.requestHandler(router::accept)
-    server.listen(8080)
+
+    // Returns HTTP server
+    return server
 }
 
 

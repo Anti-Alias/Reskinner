@@ -1,0 +1,47 @@
+body {
+    background-color: rgb(230, 230, 230)
+}
+
+a, a:link, a:visited {
+    text-decoration: none;
+    color: white;
+}
+
+.float-right {
+    float: right;
+}
+
+
+.navigation {
+    background-color: rgb(75, 75, 75);
+    color: rgba(255, 255, 255, 0.85)
+}
+
+.navigation-header {
+    float: left;
+    height: 45px;
+    border: none;
+    background-color: rgb(75, 75, 75);
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20pt;
+    color: rgba(255, 255, 255, 0.85)
+
+}
+
+.navigation-button {
+    float: left;
+    height: 45px;
+    border: none;
+    background-color: rgb(75, 75, 75);
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 12pt;
+    color: rgba(255, 255, 255, 0.85)
+}
+
+.navigation-button:hover {
+    cursor: pointer;
+    background-color: rgb(50, 50, 50);
+    text-decoration : none;
+}

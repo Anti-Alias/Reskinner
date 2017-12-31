@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{#block "title"}}Default Title{{/block}}</title>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/bootstrap-grid.css">
+        <link rel="stylesheet" href="css/bootstrap-reboot.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="js/jquery-3.1.1.slim.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 navigation">
+                    <button class="navigation-header">Reskinner</button
+                    ><a href="/"><button class="navigation-button">Home</button></a
+                    ><a href="/"><button class="navigation-button">Texture Packs</button></a
+                    ><a href="/"><button class="navigation-button">Audio Packs</button></a
+                    ><a href="/"><button class="navigation-button">Group Packs</button></a
+                    ><a href="/"><button class="navigation-button float-right">Log in</button></a
+                    ><a href="/"><button class="navigation-button float-right">Sign up</button></a>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center">
+                    {{#block "content"}}
+                        Default Content
+                    {{/block}}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
