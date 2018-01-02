@@ -16,21 +16,16 @@
                 <div class="col-md-12 navigation">
                     <button class="navigation-header">Reskinner</button
                     ><a href="/"><button class="navigation-button">Home</button></a
-                    ><a href="/"><button class="navigation-button">Texture Packs</button></a
-                    ><a href="/"><button class="navigation-button">Audio Packs</button></a
-                    ><a href="/"><button class="navigation-button">Group Packs</button></a
-                    ><a href="/"><button class="navigation-button float-right">Log in</button></a
-                    ><a href="/"><button class="navigation-button float-right">Sign up</button></a>
-
+                    ><a href="/texturepacks"><button class="navigation-button">Texture Packs</button></a
+                    ><a href="/audiopacks"><button class="navigation-button">Audio Packs</button></a
+                    ><a href="/grouppacks"><button class="navigation-button">Group Packs</button></a
+                    ><a href="/login"><button class="navigation-button float-right">LOG IN</button></a
+                    ><a href="/signup"><button class="navigation-button float-right">SIGN UP</button></a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-8 offset-md-2 text-center">
-                    {{#block "content"}}
-                        Default Content
-                    {{/block}}
-                </div>
-            </div>
+            {{#block "content"}}
+                Default Content
+            {{/block}}
         </div>
     </body>
 </html>

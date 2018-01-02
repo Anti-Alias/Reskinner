@@ -4,3 +4,4 @@
 INSERT INTO "user" ("email", "password") VALUES ('root', 'root');
 
 INSERT INTO "resource_type" ("name") VALUES ('texture'), ('music'), ('sound-effect'), ('model');
+

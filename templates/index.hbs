@@ -4,8 +4,31 @@
 
 {{!-- Injects home content into root page --}}
 {{#partial "content"}}
-    <h1>Header</h1>
-    <p>That was the header content</p>
+<div class="row">
+    <div class="col-md-6 offset-md-3 text-center content">
+
+        <h1>Welcome</h1>
+        <p>
+            Reskinner is an online tool where users can collaborate on altering the textures and audio of video games.
+            While creating artistic high-definition packs perfectly possible, the main focus is creating comedic packs
+            rendering the games nigh unrecognizable when compared to its original content.
+        </p>
+        <p>
+            Beating us to the punch is the youtube channel known as <a target="blank" href="https://www.youtube.com/channel/UCwVTU0Ue-Z3Ulz1lvdqNV0Q">Games Repainted</a>
+            known for creating texture packs that demonstrate the intended effect of this website.
+        </p>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-8 offset-md-2 text-center content">
+        <br>
+        <h3> Notable Examples </h3>
+        {{#each example-images}}
+        <img src="{{.}}" alt="Image {{.}} not found" class="example-image">{{/each}}
+    </div>
+</div>
 {{/partial}}
 
 

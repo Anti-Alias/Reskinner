@@ -17,3 +17,4 @@ CREATE TABLE "resource" (
     id SERIAL PRIMARY KEY,
     typeId INT REFERENCES "resource_type" NOT NULL
 );
+

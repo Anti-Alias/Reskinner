@@ -34,7 +34,6 @@ fun main(args: Array<String>) {
         var running = true
         val server = makeServer(appCfg, dbCfg).listen(8080)
 
-
         // Reads from stdin to manage server.
         println("Please press 'enter' to close application. Pressing ^C will kill the gradle daemon making builds take longer.")
         readLine()

@@ -1,10 +1,22 @@
 body {
-    background-color: rgb(230, 230, 230)
+    background-color: white;
 }
 
 a, a:link, a:visited {
     text-decoration: none;
-    color: white;
+}
+
+button:focus {
+    outline:0;
+}
+
+p {
+    text-align: left;
+}
+
+body {
+    font-size: 14pt;
+    color: rgba(0, 0, 0, 0.75);
 }
 
 .float-right {
@@ -44,4 +56,14 @@ a, a:link, a:visited {
     cursor: pointer;
     background-color: rgb(50, 50, 50);
     text-decoration : none;
+}
+
+.content {
+    margin-top: 25px;
+}
+
+.example-image {
+    width: 300px;
+    height: 200px;
+    margin: 5px;
 }

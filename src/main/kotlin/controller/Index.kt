@@ -1,7 +1,6 @@
 package controller
 import com.github.pgasync.Db
 import io.vertx.ext.web.*
-import io.vertx.core.http.*
 import io.vertx.ext.web.handler.TemplateHandler
 
 
@@ -28,8 +27,8 @@ class Index(val db: Db, val templateHandler: TemplateHandler) {
      */
     fun index(ctx: RoutingContext) {
 
-        val req: HttpServerRequest = ctx.request()
-        val resp: HttpServerResponse = ctx.response()
+        val exampleImages = (1 .. 6).map{ i -> "/images/example$i.png"}
+        ctx.put("example-images", exampleImages)
         ctx.next()
     }
 }
