@@ -5,6 +5,7 @@ import io.vertx.core.http.*
 import io.vertx.ext.web.*
 import io.vertx.core.json.*
 import controller.*
+import handler.CustomTemplateHandler
 import io.vertx.ext.web.handler.StaticHandler
 import io.vertx.ext.web.handler.TemplateHandler
 import io.vertx.ext.web.templ.HandlebarsTemplateEngine
@@ -23,36 +24,39 @@ fun main(args: Array<String>) {
     val appCfg = JsonObject(appStr)
     val dbCfg = JsonObject(dbStr)
 
-    // Determines if docker is being used
+    // Gets data from configs
     val docker: Boolean = appCfg.getBoolean("docker")
+    val environment: String = appCfg.getString("environment")
 
-    // If not using docker, run app in background thread, and
-    // allow it to die by pressing 'enter' in command line.
-    if(!docker) {
-
-        // Starts server in background thread
-        var running = true
-        val server = makeServer(appCfg, dbCfg).listen(8080)
-
-        // Reads from stdin to manage server.
-        println("Please press 'enter' to close application. Pressing ^C will kill the gradle daemon making builds take longer.")
-        readLine()
-
-        // Shuts down server
-        println("Shutting down...")
-        server.close {
-            System.exit(0)
-        }
+    // Starts multiple instances of server. Each instance
+    // will be load-balanced between threads.
+    val vertx = Vertx.vertx()
+    val processors = Runtime.getRuntime().availableProcessors()
+    println("Creating $processors http servers, matching the number of available processors.")
+    repeat(processors) {
+        val server: HttpServer = makeServer(vertx, appCfg, dbCfg)
+        server.listen(8080)
     }
 
-    // Otherwise, run it on current thread
-    else makeServer(appCfg, dbCfg).listen(8080)
+    // If we are testing on raw hardware locally,
+    // we need to prevent the main thread from terminating.
+    // This prevents the gradle daemon from getting destroyed
+    // when the programmer exists when pressing ^C.
+    // If the daemon terminates, builds will take substantially longer.
+    if(!docker && environment == "local") {
+
+        println("Press 'enter' to close application.")
+        readLine()
+        vertx.close {
+            println("Bye")
+        }
+    }
 }
 
 /**
  * Starts the application
  */
-fun makeServer(appCfg: JsonObject, dbCfg: JsonObject): HttpServer {
+fun makeServer(vertx: Vertx, appCfg: JsonObject, dbCfg: JsonObject): HttpServer {
 
     // Creates a Db client
     val templateCacheSize: Int = appCfg.getInteger("template-cache-size")
@@ -61,13 +65,12 @@ fun makeServer(appCfg: JsonObject, dbCfg: JsonObject): HttpServer {
     // Creates operation to start application
     println("Starting HTTP server")
 
-    // Creates handebar engine and handler
+    // Creates handlebar engine and handler
     val engine = HandlebarsTemplateEngine.create()
     engine.setMaxCacheSize(templateCacheSize)
-    val templateHandler = TemplateHandler.create(engine)
+    val templateHandler = CustomTemplateHandler(engine, "templates", "text/html")
 
-    // Creates root vertx for HTTP server
-    val vertx = Vertx.vertx()
+    // Creates Router for HTTP server
     val router = Router.router(vertx)
 
     // Routes static files
@@ -81,7 +84,6 @@ fun makeServer(appCfg: JsonObject, dbCfg: JsonObject): HttpServer {
     // Routes pages
     Index(db, templateHandler).configure(router)
     SignUp(db, templateHandler).configure(router)
-
 
     // Creates HTTP server, assigns routes, and listens on port
     val server: HttpServer = vertx.createHttpServer()
