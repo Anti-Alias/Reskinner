@@ -7,7 +7,6 @@ import io.vertx.core.json.*
 import controller.*
 import handler.CustomTemplateHandler
 import io.vertx.ext.web.handler.StaticHandler
-import io.vertx.ext.web.handler.TemplateHandler
 import io.vertx.ext.web.templ.HandlebarsTemplateEngine
 import java.io.File
 

@@ -1,5 +1,5 @@
 {
-    "environment" : "local",
-    "docker" : true,
-    "template-cache-size" : 10000
+    "environment" : "local",        // Environment. ["local", "test", "prod"]
+    "docker" : true,                // Docker flag. [false, true]
+    "template-cache-size" : 10000   // Cache size of templates. [0-infinity]
 }
