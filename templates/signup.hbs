@@ -1,0 +1,23 @@
+{{!-- Injects title content --}}
+{{#partial "title"}}Sign Up{{/partial}}
+
+
+{{!-- Injects home content into root page --}}
+{{#partial "content"}}
+<div class="row">
+    <div class="col-md-6 offset-md-3 text-center content">
+
+        <h1>Sign Up</h1>
+        <form>
+            <div class="form-group">
+                <label for="email-input">Email</label>
+                <input type="email" name="email-input">
+            </div>
+        </form>
+    </div>
+</div>
+{{/partial}}
+
+
+{{!-- Inherits root page --}}
+{{> root}}

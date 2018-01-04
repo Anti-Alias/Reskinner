@@ -26,27 +26,8 @@ fun main(args: Array<String>) {
     // Determines if docker is being used
     val docker: Boolean = appCfg.getBoolean("docker")
 
-    // If not using docker, run app in background thread, and
-    // allow it to die by pressing 'enter' in command line.
-    if(!docker) {
-
-        // Starts server in background thread
-        var running = true
-        val server = makeServer(appCfg, dbCfg).listen(8080)
-
-        // Reads from stdin to manage server.
-        println("Please press 'enter' to close application. Pressing ^C will kill the gradle daemon making builds take longer.")
-        readLine()
-
-        // Shuts down server
-        println("Shutting down...")
-        server.close {
-            System.exit(0)
-        }
-    }
-
-    // Otherwise, run it on current thread
-    else makeServer(appCfg, dbCfg).listen(8080)
+    // Starts server in background thread
+    val server = makeServer(appCfg, dbCfg).listen(8080)
 }
 
 /**
@@ -80,6 +61,7 @@ fun makeServer(appCfg: JsonObject, dbCfg: JsonObject): HttpServer {
 
     // Routes pages
     Index(db, templateHandler).configure(router)
+    SignUp(db, templateHandler).configure(router)
 
 
     // Creates HTTP server, assigns routes, and listens on port
