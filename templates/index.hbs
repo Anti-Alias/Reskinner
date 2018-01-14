@@ -26,7 +26,8 @@
         <br>
         <h3> Notable Examples </h3>
         {{#each example-images}}
-        <img src="{{.}}" alt="Image {{.}} not found" class="example-image">{{/each}}
+            <img src="{{this}}" alt="Image {{this}} not found" class="example-image">
+        {{/each}}
     </div>
 </div>
 {{/partial}}

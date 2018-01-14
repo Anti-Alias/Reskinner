@@ -11,6 +11,7 @@ services:
             POSTGRES_USER: reskinner
             POSTGRES_PASSWORD: reskinner
             POSTGRES_DB: reskinner
+            DB_DEPLOYMENT_TYPE: all
         volumes:
             - ./sql:/docker-entrypoint-initdb.d/
 

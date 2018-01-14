@@ -19,6 +19,16 @@ body {
     color: rgba(0, 0, 0, 0.75);
 }
 
+form {
+    text-align: left;
+    border-style: solid;
+    border-width: 1px;
+    padding: 25px;
+    border-radius: 5px;
+    border-color: lightgray;
+}
+
+
 .float-right {
     float: right;
 }

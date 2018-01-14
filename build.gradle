@@ -27,6 +27,7 @@ dependencies {
     compile "io.vertx:vertx-jdbc-client:$vertx_version"
     compile "io.vertx:vertx-rx-java2:$vertx_version"
     compile "io.vertx:vertx-web-templ-handlebars:$vertx_version"
+    compile "io.vertx:vertx-mail-client:$vertx_version"
     compile "com.github.alaisi.pgasync:postgres-async-driver:$pg_async_driver_version"
 }
 

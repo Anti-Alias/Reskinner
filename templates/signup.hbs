@@ -5,15 +5,34 @@
 {{!-- Injects home content into root page --}}
 {{#partial "content"}}
 <div class="row">
-    <div class="col-md-6 offset-md-3 text-center content">
+    <div class="col-md-2 offset-md-5 text-center content">
 
         <h1>Sign Up</h1>
-        <form>
+        <br>
+        <form id="signup" method="POST">
             <div class="form-group">
-                <label for="email-input">Email</label>
-                <input type="email" name="email-input">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="user-input" name="user" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="pass" name="pass" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Password Repeat">
+            </div>
+            <button type="submit" class="btn btn-primary" id="signup-button">Submit</button>
+
+            <div id="message">
+                {{#each messages}}
+                <div class="alert alert-danger mt-3 mb-0" role="alert">
+                    {{this}}
+                </div>
+                {{/each}}
             </div>
         </form>
+
     </div>
 </div>
 {{/partial}}

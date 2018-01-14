@@ -69,6 +69,7 @@ fun makeServer(vertx: Vertx, appCfg: JsonObject, dbCfg: JsonObject): HttpServer 
     engine.setMaxCacheSize(templateCacheSize)
     val templateHandler = CustomTemplateHandler(engine, "templates", "text/html")
 
+
     // Creates Router for HTTP server
     val router = Router.router(vertx)
 
@@ -76,9 +77,12 @@ fun makeServer(vertx: Vertx, appCfg: JsonObject, dbCfg: JsonObject): HttpServer 
     val imageHandler = StaticHandler.create("images")
     val cssHandler = StaticHandler.create("css")
     val jsHandler = StaticHandler.create("js")
+    val clientHandler = StaticHandler.create("client")
     router.get("/images/*").handler(imageHandler)
     router.get("/js/*").handler(jsHandler)
     router.get("/css/*").handler(cssHandler)
+    router.get("/client/*").handler(clientHandler)
+
 
     // Routes pages
     Index(db, templateHandler).configure(router)
