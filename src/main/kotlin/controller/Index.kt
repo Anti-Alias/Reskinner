@@ -1,5 +1,6 @@
 package controller
 import com.github.pgasync.Db
+import io.vertx.core.Vertx
 import io.vertx.ext.web.*
 import io.vertx.ext.web.handler.TemplateHandler
 

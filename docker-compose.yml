@@ -13,7 +13,7 @@ services:
             POSTGRES_DB: reskinner
             DB_DEPLOYMENT_TYPE: all
         volumes:
-            - ./sql:/docker-entrypoint-initdb.d/
+            - ./db:/docker-entrypoint-initdb.d/
 
     adminer:
         container_name: adminer
@@ -27,9 +27,12 @@ services:
     reskinner:
         container_name: reskinner
         image: reskinner
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile
         restart: always
         ports:
             - 8080:8080
         depends_on:
             - db
+

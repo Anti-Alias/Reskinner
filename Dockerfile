@@ -11,7 +11,7 @@ WORKDIR /reskinner
 # Add application files to working directory. (Executable, configs, etc)
 ADD ./build/libs/Reskinner.jar /reskinner
 ADD configs-docker configs
-ADD sql sql
+ADD db db
 ADD templates templates
 ADD images images
 ADD css css

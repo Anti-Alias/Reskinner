@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
     // Starts multiple instances of server. Each instance
     // will be load-balanced between threads.
     val vertx = Vertx.vertx()
-    val processors = Runtime.getRuntime().availableProcessors()
+    val processors:Int = Runtime.getRuntime().availableProcessors()
     println("Creating $processors http servers, matching the number of available processors.")
     repeat(processors) {
         val server: HttpServer = makeServer(vertx, appCfg, dbCfg)
@@ -43,7 +43,6 @@ fun main(args: Array<String>) {
     // when the programmer exists when pressing ^C.
     // If the daemon terminates, builds will take substantially longer.
     if(!docker && environment == "local") {
-
         println("Press 'enter' to close application.")
         readLine()
         vertx.close {
@@ -73,7 +72,7 @@ fun makeServer(vertx: Vertx, appCfg: JsonObject, dbCfg: JsonObject): HttpServer 
     // Creates Router for HTTP server
     val router = Router.router(vertx)
 
-    // Routes static files
+    // Routes static
     val imageHandler = StaticHandler.create("images")
     val cssHandler = StaticHandler.create("css")
     val jsHandler = StaticHandler.create("js")
@@ -87,6 +86,7 @@ fun makeServer(vertx: Vertx, appCfg: JsonObject, dbCfg: JsonObject): HttpServer 
     // Routes pages
     Index(db, templateHandler).configure(router)
     SignUp(db, templateHandler).configure(router)
+    LogIn(db, templateHandler).configure(router)
 
     // Creates HTTP server, assigns routes, and listens on port
     val server: HttpServer = vertx.createHttpServer()

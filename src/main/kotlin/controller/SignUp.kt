@@ -3,6 +3,7 @@ import com.github.pgasync.Db
 import io.vertx.core.http.HttpServerRequest
 import io.vertx.core.http.HttpServerResponse
 import io.vertx.core.json.JsonArray
+import io.vertx.core.json.JsonObject
 import io.vertx.ext.mail.mailencoder.EmailAddress
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
@@ -42,24 +43,49 @@ class SignUp(val db: Db, val templateHandler: TemplateHandler) {
 
             // Gets attributes
             val atts = req.formAttributes()
-            val email = EmailAddress(atts["email"])
-            val username:String = atts["username"]
+            val emailStr:String = atts["email"]
+            val user:String = atts["user"]
             val pass:String = atts["pass"]
             val pass2:String = atts["pass2"]
 
-            // Handles attributes
-            val errors = JsonArray()
-            if(pass != pass2)
-                errors.add("Passwords did not match")
+            // Checks parameters.
+            // Appends error messages if encountered
+            var error = false
+            val messages = mutableListOf<String>()
+            val response = mutableMapOf<String, Any>("messages" to messages)
+            if(emailStr.isEmpty()) {
+                messages.add("Email not specified")
+                error = true
+            }
+            if(user.isEmpty()) {
+                messages.add("User not specified")
+                error = true
+            }
+            if(pass.isEmpty()) {
+                messages.add("Password not specified")
+                error = true
+            }
+            if(pass2.isEmpty()) {
+                messages.add("Repeat password not specified")
+                error = true
+            }
+            if(!pass.isEmpty() && !pass2.isEmpty() && pass != pass2) {
+                messages.add("Passwords did not match.")
+                error = true
+            }
 
-            // If there are errors...
-            if(errors.isEmpty) {
-                resp.end("GJ, person!")
+            // If no obvious errors, try to insert user data.
+            if(!error) {
+                messages.add("Logged in!")
             }
-            else {
-                resp.statusCode = 500
-                resp.end(errors.toString())
-            }
+
+            // Set error flag.
+            response.put("error", error)
+
+
+
+            // Sends all responses as a json array.
+            resp.end(JsonObject(response).toString())
         }
     }
 }

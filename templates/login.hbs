@@ -1,0 +1,33 @@
+{{!-- Injects title content --}}
+{{#partial "title"}}Log In{{/partial}}
+
+
+{{!-- Injects home content into root page --}}
+{{#partial "content"}}
+<div class="row">
+    <div class="col-md-4 offset-md-4 text-center content">
+
+        <h1>Log In</h1>
+        <br>
+        <form id="login" method="POST">
+            <div class="form-group">
+                <input type="email" class="form-control" name="email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="user-or-email" placeholder="Username or Email">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="pass" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary" id="login-button">Submit</button>
+            <div id="message">
+            </div>
+        </form>
+
+    </div>
+</div>
+{{/partial}}
+
+
+{{!-- Inherits root page --}}
+{{> root}}
