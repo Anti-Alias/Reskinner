@@ -53,7 +53,12 @@ let site = {
 
             // Handles post result
             return $
-                .post(url, form.serialize())
+                .ajax({
+                   type: "POST",
+                   url: url,
+                   data: form.serialize(),
+                   dataType: "text"
+                 })
                 .then((responseText) =>
                 {
                     // Parses response
@@ -95,6 +100,12 @@ $(document).ready(() =>
     // ---------- Signup handler -------------
     signupButton.click( event =>
     {
+        // Checks validity
+        let signupForm = $("#signup")
+        if(!signupForm[0].checkValidity()) return
+
+        // Handles request
+        event.preventDefault()
         site
             .postForm("/signup", "#signup")
             .then((html) => {
@@ -107,36 +118,17 @@ $(document).ready(() =>
     // ---------- Login handler -------------
     loginButton.click( event =>
     {
-        // Gets form, and possibly exists early if form is invalid
-        let loginForm = $("#signup")
-        if(!signupForm[0].checkValidity()) return
+        // Checks validity
+        let loginForm = $("#login")
+        if(!loginForm[0].checkValidity()) return
 
-        // Prevents navigating away, and makes post.
+        // Handles request
         event.preventDefault()
-        let request = $.post("/signup", signupForm.serialize())
-
-        // Handles post result
-        let messages
-        request
-            .then((responseText) =>
-            {
-                // Parses response and stores message
-                let response = JSON.parse(responseText)
-                messages = response.messages
-
-                // Determines template to use
-                let templateUrl = null
-                if(response.error) templateUrl = "/client/error.hbs"
-                else templateUrl = "/client/success.hbs"
-
-                // Continues with deferred template
-                return site.loadTemplate(templateUrl)
+        site
+            .postForm("/login", "#login")
+            .then((html) => {
+                $("#message").html(html)
             })
-            .then((template) =>
-            {
-                // Renders template and displays
-                let resultHtml = template({ "messages" : messages})
-                $("#message").html(resultHtml)
-            })
+            .catch((error) => { console.log(error) })
     })
 })

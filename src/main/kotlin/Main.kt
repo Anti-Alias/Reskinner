@@ -81,7 +81,7 @@ fun makeServer(vertx: Vertx, appCfg: JsonObject, dbCfg: JsonObject): HttpServer 
     router.get("/js/*").handler(jsHandler)
     router.get("/css/*").handler(cssHandler)
     router.get("/client/*").handler(clientHandler)
-
+    router.route().failureHandler (::handleFailure)
 
     // Routes pages
     Index(db, templateHandler).configure(router)
@@ -94,6 +94,18 @@ fun makeServer(vertx: Vertx, appCfg: JsonObject, dbCfg: JsonObject): HttpServer 
 
     // Returns HTTP server
     return server
+}
+
+
+/**
+ * Handles an arbitrary failure
+ */
+fun handleFailure(ctx: RoutingContext):Unit {
+
+    val response = JsonObject()
+    response.put("messages", JsonArray(listOf("Internal server error")))
+    response.put("error", true)
+    ctx.response().end(response.toString())
 }
 
 

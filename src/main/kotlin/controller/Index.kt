@@ -15,9 +15,8 @@ class Index(val db: Db, val templateHandler: TemplateHandler) {
      * Sets routes for home pages.
      */
     fun configure(router: Router) {
-        router.get("/")
-                .handler(::index)
-                .handler(templateHandler)
+        router.get("/").handler(::index)
+        router.get("/").handler(templateHandler)
     }
 
 
